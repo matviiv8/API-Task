@@ -1,6 +1,6 @@
 <div align="center">  
 # API Task
-</div>  
+</div> 
 
 Design an API, for the management of the subject area(online store).
 
@@ -14,7 +14,7 @@ Products
 - display the list products : GET api/Products
 - update product : PUT api/Products/{Id}
 
-### Task:
+## Task:
 You only need to implement controllers and actions on the Asp.Net Core Web API. Connect Swagger to test the API.
 
 ### Result screenshot - Swagger
