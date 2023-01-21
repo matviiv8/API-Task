@@ -16,7 +16,7 @@ namespace API_Task.Controllers
         }
 
         /// <summary>  
-        /// get all products
+        /// return the products list
         /// </summary>  
         /// <param></param> 
         [HttpGet]
@@ -35,7 +35,7 @@ namespace API_Task.Controllers
 
 
         /// <summary>  
-        /// get product by id
+        /// return product by id
         /// </summary>  
         /// <param name="id">id</param> 
         [HttpGet("{id}")]
@@ -59,7 +59,7 @@ namespace API_Task.Controllers
         }
 
         /// <summary>  
-        /// delete product
+        /// delete the product of id
         /// </summary>  
         /// <param name="id">id</param>  
         [HttpDelete("{id}")]
@@ -165,7 +165,7 @@ namespace API_Task.Controllers
         }
 
         /// <summary>  
-        /// create product
+        /// save product in database
         /// </summary>  
         /// <param name="product">object product</param> 
         [HttpPost]
