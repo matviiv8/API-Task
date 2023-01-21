@@ -89,8 +89,8 @@ namespace API_Task.Controllers
         /// </summary>  
         /// <param name="id">id</param>  
         /// <param name="product">object product</param> 
-        [HttpPut]
-        public IActionResult Update([FromBody] Product product)
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] Product product)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace API_Task.Controllers
                     return BadRequest();
                 }
 
-                var oldProduct = _service.GetById(product.Id);
+                var oldProduct = _service.GetById(id);
 
                 if (oldProduct == null)
                 {
@@ -113,7 +113,7 @@ namespace API_Task.Controllers
                 var model = new
                 {
                     original,
-                    after = product,
+                    after = oldProduct,
                 };
 
                 return Ok(model);
