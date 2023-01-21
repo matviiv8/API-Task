@@ -1,6 +1,6 @@
-<div align="center">  
+
 # API Task
-</div> 
+
 
 Design an API, for the management of the subject area(online store).
 
