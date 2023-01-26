@@ -20,11 +20,20 @@ namespace API_Task.Controllers
         /// </summary>  
         /// <param></param> 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Get()
         {
             try
             {
                 var products = _service.GetAll();
+                
+                if(products == null)
+                {
+                    return NotFound();
+                }
+
                 return Ok(products);
             }
             catch(Exception error)
@@ -39,10 +48,19 @@ namespace API_Task.Controllers
         /// </summary>  
         /// <param name="id">id</param> 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetById(int id)
         {
             try
             {
+                if(id < 0)
+                {
+                    return BadRequest();
+                }
+
                 var product = _service.GetById(id);
 
                 if (product == null)
@@ -63,10 +81,19 @@ namespace API_Task.Controllers
         /// </summary>  
         /// <param name="id">id</param>  
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Delete(int id)
         {
             try
             {
+                if(id < 0)
+                {
+                    return BadRequest();
+                }
+
                 var product = _service.GetById(id);
 
                 if (product == null)
@@ -76,7 +103,7 @@ namespace API_Task.Controllers
 
                 _service.Delete(product);
 
-                return Ok();
+                return NoContent();
             }
             catch (Exception error)
             {
@@ -90,11 +117,15 @@ namespace API_Task.Controllers
         /// <param name="id">id</param>  
         /// <param name="product">object product</param> 
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Update(int id, [FromBody] Product product)
         {
             try
             {
-                if (product == null)
+                if (product == null || id < 0)
                 {
                     return BadRequest();
                 }
@@ -130,11 +161,15 @@ namespace API_Task.Controllers
         /// <param name="id">id</param>  
         /// <param name="quantity">new product quantity</param> 
         [HttpPost("{id}/Quantity")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult UpdateQuantity(int id, [FromBody] int quantity)
         {
             try
             {
-                if (quantity == null)
+                if (quantity == null || id < 0)
                 {
                     return BadRequest();
                 }
@@ -165,10 +200,13 @@ namespace API_Task.Controllers
         }
 
         /// <summary>  
-        /// save product in database
+        /// create a new product
         /// </summary>  
         /// <param name="product">object product</param> 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Add([FromBody] Product product)
         {
             try
@@ -180,7 +218,7 @@ namespace API_Task.Controllers
 
                 _service.Add(product);
 
-                return Ok(product);
+                return Created("Add", product);
             }
             catch (Exception error)
             {
